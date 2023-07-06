@@ -1,9 +1,11 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+import Cart from '../components/Cart.vue'
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <Cart />
   </main>
 </template>
+
+
