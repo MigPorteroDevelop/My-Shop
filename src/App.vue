@@ -1,6 +1,7 @@
 <script setup>
 import Header from './components/Header.vue'
-import ProductsList from './components/productsList.vue'
+import ProductsList from './components/ProductsList.vue'
+import Cart from './components/Cart.vue'
 </script>
 
 <template class="container">
@@ -9,5 +10,8 @@ import ProductsList from './components/productsList.vue'
   </div>
   <div>
     <ProductsList />
+  </div>
+  <div>
+    <Cart />
   </div>
 </template>
