@@ -1,8 +1,5 @@
 <script setup>
-import { useProductStore } from '@/stores/products';
-
-const productStore = useProductStore();
-const products = productStore.getAllProducts;
+import products from '@/assets/products.json'
 
 </script>
 
@@ -22,20 +19,6 @@ const products = productStore.getAllProducts;
                         Add to cart
                     </button>
                 </div>
-            </div>
-        </div>
-        <div id="product-card" class="p-4 border-2">
-            <div id="product-image" class="w-40 h-40">
-                <img src="@/assets/images/products/bildschrim.png">
-            </div>
-            <div id="product-info" class="text-center my-5">
-                <h5 class="font-bold mb-2">Bildschrim</h5>
-                <h6>354€</h6>
-            </div>
-            <div class="flex items-center">
-                <button class="bg-softGreen hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mx-auto">
-                    Add to cart
-                </button>
             </div>
         </div>
     </section>
