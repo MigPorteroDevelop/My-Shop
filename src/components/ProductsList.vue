@@ -46,6 +46,9 @@ const decrement = (index) => {
     // Si la cantidad llega a cero, mostrar el botón nuevamente
     if (eventProducts[index].items === 0) {
       showButton.value = showButton.value.filter((id) => id !== eventProducts[index].id);
+
+      // Restablecer la cantidad de items a 1 cuando el botón se muestra nuevamente
+      eventProducts[index].items = 1;
     }
   };
 };
