@@ -1,70 +1,41 @@
 <script setup>
-import { ref } from 'vue';
-import { reactive } from 'vue';
-import productsBase from '@/assets/productsBase.json'
+import { useShopProducts } from '@/stores/shopProducts.js';
 
-// Crear una variable reactiva llamada 'eventProducts' que almacena la lista de productos.
-// 'reactive' se utiliza para convertir el objeto en un objeto reactivo de Vue, lo que permite 
-// el seguimiento de los cambios en sus propiedades.
-const eventProducts = reactive(productsBase.products);
+// Desde aquí accedemos a todas las funciones de la store.
 
-// Crear una variable de referencia llamada 'showButton' que se inicializa como un array vacío.
-// Utilizada para controlar la visibilidad de los botones.
-const showButton = ref([]);
+// Metemos los datos de la store en una variable.
+const store = useShopProducts();
 
-// Definir la función 'changeButton' que oculta un botón.
-// Toma un 'id' como argumento y lo agrega al array 'showButton'.
-// Esto significa que cuando se llama a esta función con un 'id' 
-// de producto específico, el botón correspondiente a ese producto se ocultará.
+// Declaramos las funciones para utilizarlas en cualquier parte de la aplicación.
 const changeButton = (id) => {
-  showButton.value.push(id);
-}
-
-// Definir la función 'isButtonVisible' que verifica si el botón debe mostrarse.
-// Toma un 'id' como argumento y devuelve 'true' si el 'id' no está incluido en el array 'showButton',
-// lo que significa que el botón correspondiente a ese 'id' debe mostrarse. En caso contrario, devuelve 'false'.
-const isButtonVisible = (id) => {
-  return !showButton.value.includes(id);
-}
-
-// Definir la función 'increment' que incrementa la cantidad de items de un producto.
-// Toma un índice como argumento y aumenta en 1 la propiedad 'items' del producto 
-// correspondiente en el array 'eventProducts'.
-const increment = (index) => {
-  eventProducts[index].items++;
+  store.changeButton(id);
 };
 
-// Definir la función 'decrement' que disminuye la cantidad de items de un producto.
-// Toma un índice como argumento y disminuye en 1 la propiedad 'items' del producto correspondiente 
-// en el array 'eventProducts'.
-// Si la cantidad llega a cero, se muestra nuevamente el botón llamando a 'showButton.value' 
-// y eliminando el 'id' del producto del array 'showButton'.
+// El uso del return debe a la necesidad de utilizar su resultado de la función en la plantilla.
+const isButtonVisible = (id) => {
+  return store.isButtonVisible(id);
+};
+
+const increment = (index) => {
+  store.increment(index);
+};
+
 const decrement = (index) => {
-  if (eventProducts[index].items > 0) {
-    eventProducts[index].items--;
-
-    // Si la cantidad llega a cero, mostrar el botón nuevamente
-    if (eventProducts[index].items === 0) {
-      showButton.value = showButton.value.filter((id) => id !== eventProducts[index].id);
-
-      // Restablecer la cantidad de items a 1 cuando el botón se muestra nuevamente
-      eventProducts[index].items = 1;
-    }
-  };
+  store.decrement(index);
 };
 </script>
 
-
 <template>
   <section id="products" class="flex flex-wrap gap-10 py-5 justify-center bg-orange-200">
-    <div v-for="(eventProduct, index) in eventProducts" :key="eventProduct.id">
+    <!--Accedemos a los datos directamente desde aqui con store.eventProducts-->
+    <div v-for="(eventProduct, index) in store.eventProducts" :key="eventProduct.id">
       <div id="product-card" class="p-4 border-2">
         <div id="product-image" class="w-40 h-40">
           <img :src="eventProduct.photo">
         </div>
         <div id="product-info" class="text-center my-5">
           <h5 class="font-bold mb-2">{{ eventProduct.name }}</h5>
-          <h6>{{ eventProduct.price }}</h6>
+          <h6>{{ eventProduct.price + " €" }}</h6>
         </div>
         <div class="flex items-center">
           <button v-if="isButtonVisible(eventProduct.id)" @click="changeButton(eventProduct.id)"
