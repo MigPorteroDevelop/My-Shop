@@ -18,7 +18,7 @@ const decrement = (index) => {
 
 <template>
   <section id="products" class="flex flex-wrap gap-10 py-5 justify-center bg-orange-200">
-    <!--Accedemos a los datos directamente desde aqui con store.eventProducts-->
+    <!--Accedemos a los datos-->
     <div v-for="(eventProduct, index) in productsBase.products" :key="eventProduct.id">
       <div id="product-card" class="p-4 border-2">
         <div id="product-image" class="w-40 h-40">
@@ -29,16 +29,20 @@ const decrement = (index) => {
           <h6>{{ eventProduct.price + " €" }}</h6>
         </div>
         <div class="flex items-center">
+          <!--Si no hay items del producto se muestra este botón
+          y entra en funcionamiento la función "increment"-->
           <button v-if="!store.productsCart[index]" @click="increment(index)"
             class="bg-softGreen hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mx-auto">
             Add to cart
           </button>
+          <!--Si hay como mínimo un item, se muestran estos botones con las funciones
+            "increment" y "decrement"-->
           <div class="m-auto flex" v-else>
             <button @click="decrement(index)"
               class="border-2 border-black rounded-full w-6 h-6 flex items-center justify-center">-</button>
             <div class="px-4">
               <input type="number" v-model="store.productsCart[index].items" class="border rounded w-12 text-center" />
-             </div>
+            </div>
             <button @click="increment(index)"
               class="border-2 border-black rounded-full w-6 h-6 flex items-center justify-center">+</button>
           </div>
