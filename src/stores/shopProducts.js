@@ -12,13 +12,11 @@ export const useShopProducts = defineStore('shopProducts', {
       if (this.productsCart[index]) {
         //se añade un item más
         this.productsCart[index].items++;
-        console.log(this.productsCart[index].items)
       } else {
         // Crea el index del producto en el array
         this.productsCart[index] = productsBase.products[index];
         // Añade un item del producto
         this.productsCart[index].items = 1;  
-        console.log(this.productsCart[index])
       }
     },
     decrement(index) {

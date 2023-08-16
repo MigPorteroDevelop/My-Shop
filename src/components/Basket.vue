@@ -1,6 +1,5 @@
 <script setup>
 import { useShopProducts } from '@/stores/shopProducts.js';
-import productsBase from '@/assets/productsBase.json';
 
 const store = useShopProducts();
 const increment = (index) => {
@@ -14,21 +13,18 @@ const decrement = (index) => {
 
 <template>
   <section>
-    <div class="bg-softPink flex py-5 justify-center">
+    <div class="flex flex-wrap gap-10 py-5 justify-center bg-softPink">
       <h1 class="text-6xl text-center">Basket</h1>
     </div>
-    <div v-if="!store.productsCart[index]" class="italic text-center text-lg p-10">
-      No products in the basket
-    </div>
-    <div class="m-auto flex" v-else>
-      <div v-for="(eventProduct, index) in productsBase.products" :key="index">
+    <div class="m-auto flex">
+      <div v-for="(productCart, index) in store.productsCart" :key="index">
         <div id="product-card" class="p-4 border-2">
           <div id="product-image" class="w-40 h-40">
-            <img :src="eventProduct.photo">
+            <img :src="productCart.photo">
           </div>
           <div id="product-info" class="text-center my-5">
-            <h5 class="font-bold mb-2">{{ eventProduct.name }}</h5>
-            <h6>{{ eventProduct.price + " €" }}</h6>
+            <h5 class="font-bold mb-2">{{ productCart.name }}</h5>
+            <h6>{{ productCart.price + " €" }}</h6>
           </div>
           <div class="flex items-center">
             <div class="m-auto flex">
