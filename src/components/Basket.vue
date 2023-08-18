@@ -17,7 +17,7 @@ const decrement = (index) => {
       <h1 class="text-6xl text-center">Basket</h1>
     </div>
     <div class="m-auto flex">
-      <div v-for="(productCart, index) in store.productsCart" :key="index">
+      <div v-for="(productCart, index) in store.productsCart" :key="productCart.id">
         <div id="product-card" class="p-4 border-2">
           <div id="product-image" class="w-40 h-40">
             <img :src="productCart.photo">
@@ -38,6 +38,9 @@ const decrement = (index) => {
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <p> {{ productCart.totalPrice + " €" }}</p>
       </div>
     </div>
   </section>
