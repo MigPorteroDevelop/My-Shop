@@ -10,6 +10,10 @@ const increment = (id) => {
 const decrement = (id) => {
   store.decrement(id);
 };
+
+const deleteProduct = (id) => {
+  store.deleteProduct(id);
+};
 </script>
 
 <template>
@@ -23,6 +27,10 @@ const decrement = (id) => {
           <div id="product-card" class="p-4 border-2">
             <div id="product-image" class="w-40 h-40">
               <img :src="product.photo">
+            </div>
+            <div>
+              <button @click="deleteProduct(product.id)"
+                class="border-2 border-black rounded-full w-6 h-6 flex items-center justify-center">-</button>
             </div>
             <div id="product-info" class="text-center my-5">
               <h5 class="font-bold mb-2">{{ product.name }}</h5>

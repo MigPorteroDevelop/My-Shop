@@ -55,6 +55,9 @@ export const useShopProducts = defineStore('shopProducts', {
           delete this.productsCart[id];
         }
       }
+    },
+    deleteProduct(id) {
+      delete this.productsCart[id];
     }
   }
 });
