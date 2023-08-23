@@ -19,29 +19,29 @@ const decrement = (id) => {
     </div>
     <div class="m-auto grid grid-cols-1">
       <div v-for="product in store.productsCart">
-        {{ product }}
-        <!-- 
-          comento->
+        <div v-if="product">
           <div id="product-card" class="p-4 border-2">
-          <div id="product-image" class="w-40 h-40">
-            <img :src="product.photo">
-          </div>
-          <div id="product-info" class="text-center my-5">
-            <h5 class="font-bold mb-2">{{ product.name }}</h5>
-            <h6>{{ product.price + " €" }}</h6>
-          </div>
-          <div class="flex items-center">
-            <div class="m-auto flex">
-              <button @click="decrement(product.id)"
-                class="border-2 border-black rounded-full w-6 h-6 flex items-center justify-center">-</button>
-              <div class="px-4">
-                <input type="number" v-model="store.productsCart[product.id].items" class="border rounded w-12 text-center" />
-              </div>
-              <button @click="increment(product.id)"
-                class="border-2 border-black rounded-full w-6 h-6 flex items-center justify-center">+</button>
+            <div id="product-image" class="w-40 h-40">
+              <img :src="product.photo">
             </div>
-          </div> 
-        </div> -->
+            <div id="product-info" class="text-center my-5">
+              <h5 class="font-bold mb-2">{{ product.name }}</h5>
+              <h6>{{ product.price + " €" }}</h6>
+            </div>
+            <div class="flex items-center">
+              <div class="m-auto flex">
+                <button @click="decrement(product.id)"
+                  class="border-2 border-black rounded-full w-6 h-6 flex items-center justify-center">-</button>
+                <div class="px-4">
+                  <input type="number" v-model="store.productsCart[product.id].items"
+                    class="border rounded w-12 text-center" />
+                </div>
+                <button @click="increment(product.id)"
+                  class="border-2 border-black rounded-full w-6 h-6 flex items-center justify-center">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <!--<div>
         <p> {{ productCart.totalPrice + " €" }}</p>
