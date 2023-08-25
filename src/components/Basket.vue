@@ -14,6 +14,10 @@ const decrement = (id) => {
 const deleteProduct = (id) => {
   store.deleteProduct(id);
 };
+
+const addPrice = (id) => {
+  store.addPrice(id);
+};
 </script>
 
 <template>
@@ -48,12 +52,13 @@ const deleteProduct = (id) => {
                   class="border-2 border-black rounded-full w-6 h-6 flex items-center justify-center">+</button>
               </div>
             </div>
+            <div class="px-4">
+              <input type="number" v-model="store.productsCart[product.id].price"
+                class="border rounded w-12 text-center" />
+            </div>
           </div>
         </div>
       </div>
-      <!--<div>
-        <p> {{ productCart.totalPrice + " €" }}</p>
-      </div>-->
     </div>
   </section>
 </template>

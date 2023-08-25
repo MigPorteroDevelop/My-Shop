@@ -4,7 +4,8 @@ import productsBase from '@/assets/productsBase.json';
 export const useShopProducts = defineStore('shopProducts', {
 
   state: () => ({
-    productsCart: []
+    productsCart: [],
+    priceCart: []
   }),
   actions: {
     //Aquí comprobamos que la posición del producto en el array. 
@@ -23,9 +24,6 @@ export const useShopProducts = defineStore('shopProducts', {
       if (this.productsCart[id] && this.productsCart[id].items < this.getProductById(id).stock) {
         //Se añade un item más
         this.productsCart[id].items++;
-
-        // Se guarda en la variable la suma del precio de los items
-        //this.totalPrice += this.productsCart[id].items.price;
 
         //Si existe un producto, y el numero de items es igual al stock del producto
       } else if (this.productsCart[id] && this.productsCart[id].items == this.getProductById(id).stock) {
@@ -46,9 +44,6 @@ export const useShopProducts = defineStore('shopProducts', {
         // Se quita un item 
         this.productsCart[id].items--;
 
-        // Se guarda en la variable la resta del precio de los items
-        //this.totalPrice -= this.productsCart[id].items.price;
-
         // Si la cantidad de items de un producto llega a 0
         if (this.productsCart[id].items === 0) {
           // Se borra el producto del array
@@ -58,6 +53,13 @@ export const useShopProducts = defineStore('shopProducts', {
     },
     deleteProduct(id) {
       delete this.productsCart[id];
+    },
+    addPrices() {
+      for (let i in this.productsCart) {
+          const product = this.productsCart[i];
+          
+      }
+      return true;
     }
   }
 });
