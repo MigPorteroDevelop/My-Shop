@@ -14,6 +14,9 @@ const decrement = (id) => {
 const deleteProduct = (id) => {
   store.deleteProduct(id);
 };
+
+const totalPrice = store.controlPrices;
+
 </script>
 
 <template>
@@ -24,7 +27,7 @@ const deleteProduct = (id) => {
     <div class="m-auto grid grid-cols-1">
       <div v-for="product in store.productsCart">
         <div v-if="product">
-          <div id="product-card" class="p-4 border-2">
+          <div id="product-card" class="p-4 border-2 border-cyan-300">
             <div id="product-image" class="w-40 h-40">
               <img :src="product.photo">
             </div>
@@ -36,7 +39,7 @@ const deleteProduct = (id) => {
               <h5 class="font-bold mb-2">{{ product.name }}</h5>
               <h6>{{ product.price + " €" }}</h6>
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center pb-5">
               <div class="m-auto flex">
                 <button @click="decrement(product.id)"
                   class="border-2 border-black rounded-full w-6 h-6 flex items-center justify-center">-</button>
@@ -50,6 +53,9 @@ const deleteProduct = (id) => {
             </div>
           </div>
         </div>
+      </div>
+      <div class="my-10 text-lg font-bold text-center border-2 border-cyan-300">
+        <p>Total price: {{ totalPrice() }}</p>
       </div>
     </div>
   </section>
