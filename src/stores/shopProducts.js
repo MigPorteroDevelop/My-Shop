@@ -4,7 +4,7 @@ import productsBase from '@/assets/productsBase.json';
 export const useShopProducts = defineStore('shopProducts', {
 
   state: () => ({
-    productsCart: [],
+    productsCart: {},
     priceCart: []
   }),
   actions: {
@@ -24,7 +24,6 @@ export const useShopProducts = defineStore('shopProducts', {
       if (this.productsCart[id] && this.productsCart[id].items < this.getProductById(id).stock) {
         //Se añade un item más
         this.productsCart[id].items++;
-
         //Si existe un producto, y el numero de items es igual al stock del producto
       } else if (this.productsCart[id] && this.productsCart[id].items == this.getProductById(id).stock) {
         alert("No hay mas stock disponible.")
@@ -36,6 +35,7 @@ export const useShopProducts = defineStore('shopProducts', {
 
         // Añade un item del producto
         this.productsCart[id].items = 1;
+        this.controlPrices();
       }
     },
     decrement(id) {
@@ -43,23 +43,31 @@ export const useShopProducts = defineStore('shopProducts', {
       if (this.productsCart[id].items > 0) {
         // Se quita un item 
         this.productsCart[id].items--;
+        this.controlPrices();
 
         // Si la cantidad de items de un producto llega a 0
         if (this.productsCart[id].items === 0) {
           // Se borra el producto del array
           delete this.productsCart[id];
+          this.controlPrices();
         }
       }
     },
     deleteProduct(id) {
       delete this.productsCart[id];
+      this.controlPrices();
     },
-    addPrices() {
-      for (let i in this.productsCart) {
-          const product = this.productsCart[i];
-          
+    controlPrices() {
+      //Se convierte el objeto en un array con los valores de los productos.
+      //El map recorre cada objeto y obtiene la propiedad que se quiera, en este caso, precio
+      this.priceCart = Object.values(this.productsCart).map(product => product.price);
+
+      let totalPrice = 0;
+      for (let i = 0; i < this.priceCart.length; i++) {
+        totalPrice += this.priceCart[i];
       }
-      return true;
+      console.log(this.priceCart);
+      console.log(totalPrice);
     }
   }
 });
