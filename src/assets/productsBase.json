@@ -32,8 +32,21 @@
       "id": 5,
       "photo": "/images/products/mouse.png",
       "name": "Mouse",
-      "price": 15,
-      "stock": 4
+      "colors": [
+        {
+          "code": "red",
+          "hexCode": "#ff1100",
+          "name": "Rojo",
+          "stock": 6
+        },
+        {
+          "code": "blue",
+          "hexCode": "#000dff",
+          "name": "Azul",
+          "stock": 4
+        }
+      ],
+      "price": 15
     },
     {
       "id": 6,

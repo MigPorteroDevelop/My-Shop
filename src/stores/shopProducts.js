@@ -4,8 +4,7 @@ import productsBase from '@/assets/productsBase.json';
 export const useShopProducts = defineStore('shopProducts', {
 
   state: () => ({
-    productsCart: {},
-    priceCart: []
+    productsCart: []
   }),
   actions: {
     //Aquí comprobamos que la posición del producto en el array. 
@@ -18,7 +17,17 @@ export const useShopProducts = defineStore('shopProducts', {
       }
       return false;
     },
+    getProductBySku(id) {
+      for (let i in productsBase.products) {
+        if (productsBase.products[i].id == id) {
+          return productsBase.products[i];
+        }
+      }
+      return false;
+    },
     increment(id) {
+
+      
       //Si existe un producto y los items del carrito son menores o igual al stock.
       //Utilizamos la función "getProductById" para tener el id exacto y accedemos a su stock.
       if (this.productsCart[id] && this.productsCart[id].items < this.getProductById(id).stock) {
@@ -55,17 +64,12 @@ export const useShopProducts = defineStore('shopProducts', {
       delete this.productsCart[id];
     },
     controlPrices() {
-      this.priceCart = Object.values(this.productsCart).map(product => product.price * product.items);
 
       // Sumamos los precios de los productos que hay dentro
       let price = 0;
-      for (let i = 0; i < this.priceCart.length; i++) {
-        price += this.priceCart[i];
+      for (let i in this.productsCart) {
+        price += this.productsCart[i].price * this.productsCart[i].items;
       }
-
-      console.log(this.priceCart);
-      console.log(price);
-
       return price;
 
     }
