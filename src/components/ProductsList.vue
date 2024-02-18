@@ -12,9 +12,10 @@ const ComponentColorPicker = ref(null);
 
 const increment = (index) => {
 
-  console.dir(ComponentColorPicker.color)
-  // console.dir(ComponentColorPicker.value.color)
-  // store.increment(index);
+  // const color = ComponentColorPicker.color;
+  const color = 'red';
+  // console.dir(ComponentColorPicker)
+  store.increment(index, color);
 };
 
 const decrement = (index) => {

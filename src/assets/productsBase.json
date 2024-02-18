@@ -26,7 +26,7 @@
       "photo": "/images/products/lautsprecher.png",
       "name": "Lautsprecher",
       "price": 55,
-      "stock": 6
+      "stock": 6,
     },
     {
       "id": 5,

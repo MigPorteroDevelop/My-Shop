@@ -17,20 +17,29 @@ export const useShopProducts = defineStore('shopProducts', {
       }
       return false;
     },
-    getProductBySku(id) {
+    checkStockBySku(sku) {
+      // 15
+      const skuParams = sku.split('-');
+      const id = skuParams[0];
+      const color = skuParams[1] == undefined ? undefined : skuParams[1];
+
       for (let i in productsBase.products) {
         if (productsBase.products[i].id == id) {
-          return productsBase.products[i];
+          if( color!==undefined ) {
+            // recorremos los colores
+            // color.stock
+            // return otra cosa
+          }
+          return productsBase.products[i].stock;
         }
       }
       return false;
     },
-    increment(id) {
+    increment(id, color = undefined) {
 
-      
       //Si existe un producto y los items del carrito son menores o igual al stock.
       //Utilizamos la función "getProductById" para tener el id exacto y accedemos a su stock.
-      if (this.productsCart[id] && this.productsCart[id].items < this.getProductById(id).stock) {
+      if ( this.checkStock(id, color) ) {
         //Se añade un item más
         this.productsCart[id].items++;
 
@@ -59,6 +68,19 @@ export const useShopProducts = defineStore('shopProducts', {
           this.deleteProduct(id);
         }
       }
+    },
+    generateSku ( id, color = undefined ) {
+      return color==undefined ? id : id + '-' + color;
+    },
+    checkStock(id, color = undefined) {
+      let sku = this.generateSku( id, color );
+
+      console.dir( this.getProductBySku(sku).stock );
+
+
+// return;
+
+      return this.productsCart[id] && this.productsCart[id].items < this.getProductBySku(id).stock
     },
     deleteProduct(id) {
       delete this.productsCart[id];
