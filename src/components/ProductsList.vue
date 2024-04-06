@@ -2,9 +2,8 @@
 import { useShopProducts } from '@/stores/shopProducts.js';
 import productsBase from '@/assets/productsBase.json';
 
-// Desde aquí accedemos a todas las funciones de la store.
-
-// Metemos los datos de la store en una variable.
+// From here we access all the functions of the store.
+// We put the data of the store in a variable
 const store = useShopProducts();
 
 const increment = (index) => {
@@ -18,7 +17,7 @@ const decrement = (index) => {
 
 <template>
   <section id="products" class="flex flex-wrap gap-10 py-5 justify-center bg-orange-200">
-    <!--Accedemos a los datos-->
+     <!--Access the data-->
     <div v-for="(product, index) in productsBase.products" :key="product.id">
       <div id="product-card" class="p-4 border-2">
         <div id="product-image" class="w-40 h-40">
@@ -29,14 +28,14 @@ const decrement = (index) => {
           <h6>{{ product.price + " €" }}</h6>
         </div>
         <div class="flex items-center">
-          <!--Si no hay items del producto se muestra este botón
-          y entra en funcionamiento la función "increment"-->
+          <!--If there are no product items, this button is displayed and 
+          the "increment" function starts working -->
           <button v-if="!store.productsCart[product.id]" @click="increment(product.id)"
             class="bg-softGreen hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mx-auto">
             Add to cart
           </button>
-          <!--Si hay como mínimo un item, se muestran estos botones con las funciones
-            "increment" y "decrement"-->
+          <!--If there is at least one item, these buttons with the functions 
+          "increment" and "decrement" are displayed.-->
           <div class="m-auto flex" v-else>
             <button @click="decrement(product.id)"
               class="border-2 border-black rounded-full w-6 h-6 flex items-center justify-center">-</button>
