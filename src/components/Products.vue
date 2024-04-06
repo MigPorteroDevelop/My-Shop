@@ -13,6 +13,10 @@ const increment = (index) => {
 const decrement = (index) => {
     store.decrement(index);
 };
+
+const deleteProduct = (id) => {
+    store.deleteProduct(id);
+};
 </script>
 
 <template>
@@ -27,28 +31,53 @@ const decrement = (index) => {
                             <img class="h-full w-full object-cover object-center group-hover:opacity-75"
                                 :src="product.photo">
                         </div>
-                        <h3 class="mt-4 text-sm text-gray-700">{{ product.name }}</h3>
-                        <p class="mt-1 text-lg font-medium text-gray-900">{{ product.price + " €" }}</p>
-                        <div class="flex items-center">
-                            <!--If there are no product items, this button is displayed and 
-                            the "increment" function starts working -->
-                            <button v-if="!store.productsCart[product.id]" @click="increment(product.id)"
-                                class="bg-softGreen hover:bg-softBlue text-white font-bold py-2 px-4 rounded-full mx-auto">
-                                Add to cart
-                            </button>
-                            <!--If there is at least one item, these buttons with the functions 
-                            "increment" and "decrement" are displayed.-->
-                            <div class="m-auto flex" v-else>
-                                <button @click="decrement(product.id)"
-                                    class="border-2 border-black rounded-full w-6 h-6 flex items-center justify-center">&#x2212;</button>
-                                <div class="px-4">
-                                    <input type="number" v-model="store.productsCart[product.id].items"
-                                        class="border rounded w-12 text-center" />
+                        <div class="flex justify-between items-center p-2">
+                            <div>
+                                <h3 class="text-sm text-gray-700">{{ product.name }}</h3>
+                                <p class="text-lg font-medium text-gray-900">{{ product.price + " €" }}</p>
+                            </div>
+                            <div>
+                                <!--If there are no product items, this button is displayed and 
+                                the "increment" function starts working -->
+                                <button v-if="!store.productsCart[product.id]" @click="increment(product.id)"
+                                    class="bg-softGreen hover:bg-softPink text-white font-bold p-3 rounded-full mx-auto">
+                                    <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="9" cy="21" r="1" />
+                                        <circle cx="20" cy="21" r="1" />
+                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                                    </svg>
+                                </button>
+                                <!--If there is at least one item, these buttons with the functions 
+                                "increment" and "decrement" are displayed.-->
+                                <div v-else>
+                                    <div class="m-auto flex border border-2 rounded">
+                                        <button @click="decrement(product.id)"><svg class="h-8 w-8" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                                    d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </button>
+                                        <div class="m-1">
+                                            <input type="number" v-model="store.productsCart[product.id].items"
+                                                class="border rounded w-12 text-center" />
+                                        </div>
+                                        <button @click="increment(product.id)"><svg class="h-8 w-8" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="text-center  ">
+                                        <button @click="deleteProduct(product.id)">
+                                            <p class="hover:text-softPink hover:uppercase hover:font-semibold">Remove</p>
+                                        </button>
+                                    </div>
                                 </div>
-                                <button @click="increment(product.id)"
-                                    class="border-2 border-black rounded-full w-6 h-6 flex items-center justify-center">&#x002B;</button>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -59,7 +88,7 @@ const decrement = (index) => {
 <style>
 input[type="number"].border.rounded.w-12.text-center::-webkit-inner-spin-button,
 input[type="number"].border.rounded.w-12.text-center::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 </style>

@@ -1,7 +1,3 @@
-<script setup>
-
-</script>
-
 <template>
   <div class="flex p-5 gap-5 bg-softBlue">
     <div class="item w-32 h-32 flex justify-center items-end">
