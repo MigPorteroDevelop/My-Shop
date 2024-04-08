@@ -1,73 +1,82 @@
-import { defineStore } from 'pinia';
-import productsBase from '@/assets/productsBase.json';
+import { defineStore } from 'pinia'
+import productsBase from '@/assets/productsBase.json'
 
 export const useShopProducts = defineStore('shopProducts', {
-
   state: () => ({
     productsCart: {},
     priceCart: []
   }),
+  getters: {
+    totalItemsInCart() {
+      // Adds up the number of items for each product in the cart
+      // Convert the object to an array and use reduce to iterate over it and sum (accumulator, current element of the array). 
+      return Object.values(this.productsCart).reduce((total, product) => {
+        // Adds the quantity of items for each product to the accumulator, starting from 0.
+        return total + product.items
+      }, 0)
+    }
+  },
   actions: {
-    //Aquí comprobamos que la posición del producto en el array. 
-    //Si coincide, devolvemos true.
+    // Here we check the position of the product in the array.
+    // If it matches, we return true.
     getProductById(id) {
       for (let i in productsBase.products) {
         if (productsBase.products[i].id == id) {
-          return productsBase.products[i];
+          return productsBase.products[i]
         }
       }
-      return false;
+      return false
     },
     increment(id) {
-      //Si existe un producto y los items del carrito son menores o igual al stock.
-      //Utilizamos la función "getProductById" para tener el id exacto y accedemos a su stock.
+      // If a product exists and the items in the cart are less than or equal to the stock.
+      // We use the "getProductById" function to get the exact id and access its stock.
       if (this.productsCart[id] && this.productsCart[id].items < this.getProductById(id).stock) {
-        //Se añade un item más
-        this.productsCart[id].items++;
+        // Adds one more item
+        this.productsCart[id].items++
 
-        //Si existe un producto, y el numero de items es igual al stock del producto
-      } else if (this.productsCart[id] && this.productsCart[id].items == this.getProductById(id).stock) {
-        alert("No hay mas stock disponible.")
-
+        // If a product exists and the number of items equals the product's stock
+      } else if (
+        this.productsCart[id] &&
+        this.productsCart[id].items == this.getProductById(id).stock
+      ) {
+        alert('No hay mas stock disponible.')
       } else {
-        // Si el producto no esta en el carrito crea el id del producto en el array 
-        // y asigna el id dentro del array al id de producto 
-        this.productsCart[id] = this.getProductById(id);
+        // If the product is not in the cart, it creates the product's id in the array
+        // and assigns the product's id to the array's id
+        this.productsCart[id] = this.getProductById(id)
 
-        // Añade un item del producto
-        this.productsCart[id].items = 1;
+        // Adds one item of the product
+        this.productsCart[id].items = 1
       }
     },
     decrement(id) {
-      // Si hay mas de 0 items del producto
+      // If there are more than 0 items of the product
       if (this.productsCart[id].items > 0) {
-        // Se quita un item 
-        this.productsCart[id].items--;
+        // Removes one item
+        this.productsCart[id].items--
 
-        // Si la cantidad de items de un producto llega a 0
+        // If the quantity of items for a product reaches 0
         if (this.productsCart[id].items === 0) {
-          // Se borra el producto del array
-          this.deleteProduct(id);
+          // Deletes the product from the array
+          this.deleteProduct(id)
         }
       }
     },
     deleteProduct(id) {
-      delete this.productsCart[id];
+      delete this.productsCart[id]
     },
     controlPrices() {
-      this.priceCart = Object.values(this.productsCart).map(product => product.price * product.items);
+      this.priceCart = Object.values(this.productsCart).map(
+        (product) => product.price * product.items
+      )
 
-      // Sumamos los precios de los productos que hay dentro
-      let price = 0;
+      // Adds up the prices of the products inside
+      let price = 0
       for (let i = 0; i < this.priceCart.length; i++) {
-        price += this.priceCart[i];
+        price += this.priceCart[i]
       }
 
-      console.log(this.priceCart);
-      console.log(price);
-
-      return price;
-
+      return price
     }
   }
-});
+})
