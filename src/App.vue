@@ -1,8 +1,6 @@
 <script setup>
+import { RouterView } from "vue-router";
 import Header from './components/Header.vue'
-import ProductsList from './components/ProductsList.vue'
-import Basket from './components/Basket.vue'
-import Products from './components/Products.vue'
 </script>
 
 <template class="container">
@@ -10,6 +8,6 @@ import Products from './components/Products.vue'
     <Header />
   </div>
   <div>
-    <Products />
+    <RouterView />
   </div>
 </template>
