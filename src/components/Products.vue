@@ -69,7 +69,7 @@ const deleteProduct = (id) => {
                                             </svg>
                                         </button>
                                     </div>
-                                    <div class="text-center  ">
+                                    <div class="text-center">
                                         <button @click="deleteProduct(product.id)">
                                             <p class="hover:text-softPink hover:uppercase hover:font-semibold">Remove</p>
                                         </button>

@@ -26,8 +26,9 @@ const store = useShopProducts();
         <img alt="Vue logo" class="m-auto" src="@/assets/mp.png" width="80" height="80" />
       </div>
       <div class="text-sm my-auto lg:flex-grow">
-        <router-link to="/" class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white lg:mr-4">
-          Home
+        <p class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white lg:mr-4">Home</p>
+        <router-link to="/products" class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white lg:mr-4">
+          Products
         </router-link>
       </div>
     </div>
