@@ -39,7 +39,7 @@ export const useShopProducts = defineStore('shopProducts', {
         this.productsCart[id] &&
         this.productsCart[id].items == this.getProductById(id).stock
       ) {
-        alert('No hay mas stock disponible.')
+        alert('No more available')
       } else {
         // If the product is not in the cart, it creates the product's id in the array
         // and assigns the product's id to the array's id

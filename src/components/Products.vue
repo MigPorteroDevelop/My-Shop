@@ -26,10 +26,8 @@ const deleteProduct = (id) => {
                 <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-16">
                     <div v-for="(product, index) in productsBase.products" :key="product.id"
                         class="group cursor-pointer">
-                        <div
-                            class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-                            <img class="h-full w-full object-cover object-center group-hover:opacity-75"
-                                :src="product.photo">
+                        <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7" id="productCard">
+                            <img class="h-full w-full object-cover object-center group-hover:opacity-75" :src="product.photo">
                         </div>
                         <div class="flex justify-between items-center p-2">
                             <div>
@@ -86,6 +84,18 @@ const deleteProduct = (id) => {
 </template>
 
 <style>
+#productCard{
+  img {    
+    transition: transform .3s ease-in-out; 
+  }
+  
+  &:hover {
+    img {
+      transform: scale(1.05);
+      cursor: pointer;
+    }
+  }
+}
 input[type="number"].border.rounded.w-12.text-center::-webkit-inner-spin-button,
 input[type="number"].border.rounded.w-12.text-center::-webkit-outer-spin-button {
     -webkit-appearance: none;

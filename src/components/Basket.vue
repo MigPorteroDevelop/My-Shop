@@ -44,14 +44,12 @@ const checkoutHandler = (flag3) => {
 };
 </script>
 
-
 <template>
-
-  <body class="bg-gray-100 overflow-y-hidden" style="height: 700px">
+  <body class="bg-gray-100 overflow-y-hidden h-[700px]">
     <div class="w-full h-full bg-black bg-opacity-90 top-0 overflow-y-auto overflow-x-hidden fixed sticky-0" id="chec-div">
       <div class="w-full absolute z-10 right-0 h-full overflow-x-hidden transform translate-x-0 transition ease-in-out duration-700" id="checkout">
         <div class="flex items-end lg:flex-row flex-col justify-end" id="cart">
-          <div class="lg:w-1/2 md:w-8/12 w-full lg:px-8 lg:py-14  md:px-6 px-4 md:py-8 py-4 bg-white overflow-y-auto overflow-x-hidden lg:h-screen h-auto" id="scroll">
+          <div class="lg:w-1/2 md:w-8/12 w-full lg:px-8 lg:py-14 md:px-6 px-4 md:py-8 py-4 bg-gray-200 overflow-y-auto overflow-x-hidden lg:h-screen h-auto" id="scroll">
             <div class="flex items-center text-gray-500 hover:text-gray-600 cursor-pointer" @click="checkoutHandler(false)">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -59,7 +57,7 @@ const checkoutHandler = (flag3) => {
               </svg>
               <router-link to="/products" class="text-sm pl-2 leading-none">Back</router-link>
             </div>
-            <div v-for="product in store.productsCart" class="p-5">
+            <div v-for="product in store.productsCart" class="mt-5 p-4 shadow-lg bg-white rounded-2xl">
               <div v-if="product">
                 <p class="lg:text-4xl text-3xl font-black leading-10 text-gray-800 pt-3">{{ product.name }}</p>
                 <div class="md:flex items-strech py-8 md:py-10 lg:py-8 border-t border-gray-50">

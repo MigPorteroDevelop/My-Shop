@@ -23,7 +23,7 @@ const store = useShopProducts();
   <nav class="flex flex-wrap items-center justify-between bg-softGreen p-6">
     <div class="flex-1 flex justify-between lg:justify-start">
       <div class="text-white mr-6">
-        <img alt="Vue logo" class="m-auto" src="@/assets/mp.png" width="80" height="80" />
+        <img class="m-auto" src="@/assets/mp.png" width="80" height="80" />
       </div>
       <div class="text-sm my-auto lg:flex-grow">
         <p class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white lg:mr-4">Home</p>
