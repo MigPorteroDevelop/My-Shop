@@ -116,7 +116,8 @@ const checkoutHandler = (flag3) => {
               <div>
                 <div class="flex items-center pb-6 justify-between lg:pt-5 pt-20">
                   <p class="text-2xl leading-normal text-gray-800">Total</p>
-                  <p class="text-2xl font-bold leading-normal text-right text-gray-800">{{ totalPrice() + 8 + "€"}}</p>
+                  <p v-if="!totalPrice()" class="text-2xl font-bold leading-normal text-right text-gray-800">{{ totalPrice() + "€"}}</p>
+                  <p v-else class="text-2xl font-bold leading-normal text-right text-gray-800">{{ totalPrice() + 8 + "€"}}</p>
                 </div>
                 <button onclick="checkoutHandler1(true)"
                   class="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white">Checkout</button>
