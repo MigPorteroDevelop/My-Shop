@@ -55,7 +55,7 @@ const checkoutHandler = (flag3) => {
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <polyline points="15 6 9 12 15 18" />
               </svg>
-              <router-link to="/products" class="text-sm pl-2 leading-none">Back</router-link>
+              <router-link to="/" class="text-sm pl-2 leading-none hover:font-bold">Back</router-link>
             </div>
             <div v-for="product in store.productsCart" class="mt-5 p-4 shadow-lg bg-white rounded-2xl">
               <div v-if="product">

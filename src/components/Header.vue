@@ -20,7 +20,8 @@ const store = useShopProducts();
 </script>
 
 <template>
-  <nav class="flex flex-wrap items-center justify-between bg-softGreen p-6">
+  <nav class="bg-softGreen">
+    <div class="flex flex-wrap items-center justify-between mx-auto max-w-2xl lg:max-w-7xl px-4 py-8 sm:px-6 sm:py-8 lg:px-8">
     <div class="flex-1 flex justify-between lg:justify-start">
       <div class="text-white mr-6">
         <img class="m-auto" src="@/assets/mp.png" width="80" height="80" />
@@ -44,5 +45,6 @@ const store = useShopProducts();
           </svg>
         </div>
       </router-link>
+    </div>
   </nav>
 </template>
