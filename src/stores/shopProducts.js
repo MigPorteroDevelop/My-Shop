@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import productsBase from '@/assets/productsBase.json'
+import Products from '../components/Products.vue'
 
 export const useShopProducts = defineStore('shopProducts', {
   state: () => ({
@@ -12,7 +12,7 @@ export const useShopProducts = defineStore('shopProducts', {
       // Convert the object to an array and use reduce to iterate over it and sum (accumulator, current element of the array). 
       return Object.values(this.productsCart).reduce((total, product) => {
         // Adds the quantity of items for each product to the accumulator, starting from 0.
-        return total + product.items
+        return total + product
       }, 0)
     }
   },
@@ -20,9 +20,9 @@ export const useShopProducts = defineStore('shopProducts', {
     // Here we check the position of the product in the array.
     // If it matches, we return true.
     getProductById(id) {
-      for (let i in productsBase.products) {
-        if (productsBase.products[i].id == id) {
-          return productsBase.products[i]
+      for (let i in Products.product) {
+        if (Products.product[i].id == id) {
+          return Products.product[i]
         }
       }
       return false
@@ -36,8 +36,7 @@ export const useShopProducts = defineStore('shopProducts', {
 
         // If a product exists and the number of items equals the product's stock
       } else if (
-        this.productsCart[id] &&
-        this.productsCart[id].items == this.getProductById(id).stock
+        this.productsCart[id] && this.productsCart[id].items == this.getProductById(id).stock
       ) {
         alert('No more available')
       } else {
