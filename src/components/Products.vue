@@ -23,9 +23,19 @@ const products = ref([]);
 watchEffect(async () => {
   const url = `https://api.escuelajs.co/api/v1/products`
   products.value = await (await fetch(url)).json()
+
+  const dataProducts = products.value.map(product => {
+    return {
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      image: product.images
+    }
+  })
+  products.value = dataProducts
 })
 
-
+/*
 const filters = ref({
   title: null
 });
@@ -34,11 +44,8 @@ watch(filters, async (newFilters) => {
 
   const newUrl = `https://api.escuelajs.co/api/v1/products`;
 
-  
-
-  console.dir(newUrl);
   products.value = await (await fetch(newUrl)).json()
-})
+})*/
 </script>
 
 <template>
@@ -48,7 +55,7 @@ watch(filters, async (newFilters) => {
         <div v-for="(product, index) in products" :key="product.id" class="group cursor-pointer">
           <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7"
             id="productCard">
-            <img class="h-full w-full object-cover object-center group-hover:opacity-75" :src="product.images">
+            <img class="h-full w-full object-cover object-center group-hover:opacity-75" :src="product.image">
           </div>
           <div class="flex justify-between items-center p-2">
             <div class="flex flex-col">

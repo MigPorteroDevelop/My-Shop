@@ -6,7 +6,7 @@ import Basket from '../components/Basket.vue'
 const routes = [
   {
     name: "products",
-    route: "/products",
+    route: "/",
     component: Products 
   },
   {
@@ -28,7 +28,7 @@ const store = useShopProducts();
       </div>
       <div class="text-sm my-auto lg:flex-grow">
         <p class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white lg:mr-4">Home</p>
-        <router-link to="/products" class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white lg:mr-4">
+        <router-link to="/" class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white lg:mr-4">
           Products
         </router-link>
       </div>
