@@ -18,21 +18,26 @@ const deleteProduct = (id) => {
   store.deleteProduct(id);
 };
 
+
 const products = ref([]);
 
 watchEffect(async () => {
   const url = `https://api.escuelajs.co/api/v1/products`
   products.value = await (await fetch(url)).json()
 
-  const dataProducts = products.value.map(product => {
+  let dataProducts = products.value.map(product => {
     return {
       id: product.id,
       title: product.title,
       price: product.price,
-      image: product.images
+      image: product.images,
+      stock: 20
     }
   })
   products.value = dataProducts
+  console.log(dataProducts)
+
+  store.setProducts(dataProducts);
 })
 
 /*
@@ -60,11 +65,11 @@ watch(filters, async (newFilters) => {
           <div class="flex justify-between items-center p-2">
             <div class="flex flex-col">
               <h3 class="pr-5 text-sm text-gray-700 h-12">{{ product.title }}</h3>
-              <p class="text-lg font-medium text-gray-900">{{ product.price + " €" }}</p>
+              <p class="text-lg pt-3 font-medium text-gray-900">{{ product.price + " €" }}</p>
             </div>
             <div>
               <!--If there are no product items, this button is displayed and 
-                                the "increment" function starts working -->
+              the "increment" function starts working -->
               <button v-if="!store.productsCart[product.id]" @click="increment(product.id)"
                 class="bg-softGreen hover:bg-softPink text-white font-bold p-3 rounded-full mx-auto">
                 <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -75,7 +80,7 @@ watch(filters, async (newFilters) => {
                 </svg>
               </button>
               <!--If there is at least one item, these buttons with the functions 
-                                "increment" and "decrement" are displayed.-->
+              "increment" and "decrement" are displayed.-->
               <div v-else>
                 <div class="m-auto flex border border-2 rounded">
                   <button @click="decrement(product.id)"><svg class="h-8 w-8" fill="none" viewBox="0 0 24 24"
@@ -103,7 +108,6 @@ watch(filters, async (newFilters) => {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>

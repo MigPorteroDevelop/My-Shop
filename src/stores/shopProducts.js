@@ -1,10 +1,10 @@
-import { defineStore } from 'pinia'
-//import productsBase from '@/assets/productsBase.json'
+import { defineStore } from 'pinia';
 
 export const useShopProducts = defineStore('shopProducts', {
   state: () => ({
     productsCart: {},
-    priceCart: []
+    priceCart: [],
+    dataProducts: {}
   }),
   getters: {
     totalItemsInCart() {
@@ -17,15 +17,18 @@ export const useShopProducts = defineStore('shopProducts', {
     }
   },
   actions: {
+    setProducts(newProducts) {
+      this.dataProducts = newProducts;
+    },
     // Here we check the position of the product in the array.
     // If it matches, we return true.
     getProductById(id) {
-      for (let i in productsBase.products) {
-        if (productsBase.products[i].id == id) {
-          return productsBase.products[i]
+      for (let i in this.dataProducts) {
+        if (this.dataProducts[i].id == id) {
+          return this.dataProducts[i];
         }
       }
-      return false
+      return false;
     },
     increment(id) {
       // If a product exists and the items in the cart are less than or equal to the stock.
