@@ -59,10 +59,10 @@ const checkoutHandler = (flag3) => {
             </div>
             <div v-for="product in store.productsCart" class="mt-5 p-4 shadow-lg bg-white rounded-2xl">
               <div v-if="product">
-                <p class="lg:text-4xl text-3xl font-black leading-10 text-gray-800 pt-3">{{ product.name }}</p>
+                <p class="lg:text-4xl text-3xl font-black leading-10 text-gray-800 pt-3">{{ product.title }}</p>
                 <div class="md:flex items-strech py-8 md:py-10 lg:py-8 border-t border-gray-50">
                   <div class="md:w-4/12 2xl:w-1/4 w-full">
-                    <img :src="product.photo">
+                    <img :src="product.image">
                   </div>
                   <div class="md:pl-3 md:w-8/12 2xl:w-3/4 flex flex-col justify-center">
                     <div class="flex justify-between w-full pt-1">
@@ -88,7 +88,7 @@ const checkoutHandler = (flag3) => {
                           <p class="cursor-pointer hover:text-softPink hover:uppercase hover:font-semibold">Remove</p>
                         </button>
                       </div>
-                      <p class="text-base font-black leading-none text-gray-800">{{ product.price + " €" }}</p>
+                      <p class="text-xl font-black leading-none text-gray-800">{{ product.price + " €" }}</p>
                     </div>
                   </div>
                 </div>
