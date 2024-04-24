@@ -19,37 +19,65 @@ const deleteProduct = (id) => {
 };
 
 
+
 const products = ref([]);
+const error = ref(null);
+
+const parseImage = (images) => {
+  if (images.length <= 0) {
+    return 'https://i.pinimg.com/originals/89/8b/29/898b29a34ea47362b0d3a1b260d9725b.jpg'
+  }
+
+  const jsonParsed = JSON.parse(images[0]);
+  if (!Array.isArray(jsonParsed)) {
+    return 'https://i.pinimg.com/originals/89/8b/29/898b29a34ea47362b0d3a1b260d9725b.jpg'
+  }
+  const firstImage = jsonParsed[0];
+
+  if (firstImage.includes("http://") || firstImage.includes("https://") || firstImage.includes("//")) {
+    return firstImage;
+  } else {
+    return "//" + firstImage;
+  }
+}
 
 watchEffect(async () => {
-  const url = `https://api.escuelajs.co/api/v1/products`
-  products.value = await (await fetch(url)).json()
+  try {
+    const url = 'https://api.escuelajs.co/api/v1/products';
+    const response = await fetch(url);
 
-  let dataProducts = products.value.map(product => {
-    return {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+
+    const dataProducts = data.map(product => ({
       id: product.id,
       title: product.title,
       price: product.price,
-      image: product.images,
-      stock: 20
-    }
-  })
-  products.value = dataProducts
-  console.log(dataProducts)
+      image: parseImage(product.images),
+      stock: 20,
+    }));
 
-  store.setProducts(dataProducts);
-})
+    products.value = dataProducts;
+    //console.log(dataProducts);
+
+    store.setProducts(dataProducts);
+  } catch (err) {
+    error.value = err.message;
+  }
+});
 
 /*
 const filters = ref({
-  title: null
+title: null
 });
 
 watch(filters, async (newFilters) => {
 
-  const newUrl = `https://api.escuelajs.co/api/v1/products`;
+const newUrl = `https://api.escuelajs.co/api/v1/products`;
 
-  products.value = await (await fetch(newUrl)).json()
+products.value = await (await fetch(newUrl)).json()
 })*/
 </script>
 
