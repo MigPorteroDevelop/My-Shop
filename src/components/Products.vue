@@ -18,26 +18,29 @@ const deleteProduct = (id) => {
   store.deleteProduct(id);
 };
 
-
-
 const products = ref([]);
 const error = ref(null);
 
 const parseImage = (images) => {
   if (images.length <= 0) {
-    return 'https://i.pinimg.com/originals/89/8b/29/898b29a34ea47362b0d3a1b260d9725b.jpg'
+    return 'https://i.pinimg.com/originals/89/8b/29/898b29a34ea47362b0d3a1b260d9725b.jpg';
   }
+  console.log(images[0]);
+  try {
+    const jsonParsed = JSON.parse(images[0]);
+    if (!Array.isArray(jsonParsed)) {
+      return 'https://i.pinimg.com/originals/89/8b/29/898b29a34ea47362b0d3a1b260d9725b.jpg';
+    }
+    const firstImage = jsonParsed[0];
 
-  const jsonParsed = JSON.parse(images[0]);
-  if (!Array.isArray(jsonParsed)) {
-    return 'https://i.pinimg.com/originals/89/8b/29/898b29a34ea47362b0d3a1b260d9725b.jpg'
-  }
-  const firstImage = jsonParsed[0];
-
-  if (firstImage.includes("http://") || firstImage.includes("https://") || firstImage.includes("//")) {
-    return firstImage;
-  } else {
-    return "//" + firstImage;
+    if (firstImage.includes("http://") || firstImage.includes("https://") || firstImage.includes("//")) {
+      return firstImage;
+    } else {
+      return "//" + firstImage;
+    }
+  } catch (e) {
+    console.error("Error parsing JSON from images", e);
+    return 'https://i.pinimg.com/originals/89/8b/29/898b29a34ea47362b0d3a1b260d9725b.jpg';
   }
 }
 
@@ -60,10 +63,11 @@ watchEffect(async () => {
     }));
 
     products.value = dataProducts;
-    //console.log(dataProducts);
+    console.log(products.value);
 
     store.setProducts(dataProducts);
   } catch (err) {
+    console.log('Error caught:', err);
     error.value = err.message;
   }
 });
