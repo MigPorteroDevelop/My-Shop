@@ -1,6 +1,7 @@
 <script setup>
 import { useShopProducts } from '../stores/shopProducts.js';
 import { ref, watchEffect, watch } from 'vue';
+import categorySelector from './smallComponents/categorySelector.vue';
 
 // From here we access all the functions of the store.
 // We put the data of the store in a variable
@@ -88,6 +89,7 @@ products.value = await (await fetch(newUrl)).json()
 <template>
   <section id="products">
     <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+      <categorySelector />
       <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-16">
         <div v-for="(product, index) in products" :key="product.id" class="group cursor-pointer">
           <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7"
