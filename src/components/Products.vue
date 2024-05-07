@@ -20,13 +20,14 @@ const deleteProduct = (id) => {
 };
 
 const products = ref([]);
+const categories = ref([]);
 const error = ref(null);
 
 const parseImage = (images) => {
   if (images.length <= 0) {
     return 'https://i.pinimg.com/originals/89/8b/29/898b29a34ea47362b0d3a1b260d9725b.jpg';
   }
-  console.log(images[0]);
+  //console.log(images[0]);
   try {
     const jsonParsed = JSON.parse(images[0]);
     if (!Array.isArray(jsonParsed)) {
@@ -40,7 +41,7 @@ const parseImage = (images) => {
       return "//" + firstImage;
     }
   } catch (e) {
-    console.error("Error parsing JSON from images", e);
+    //console.error("Error parsing JSON from images", e);
     return 'https://i.pinimg.com/originals/89/8b/29/898b29a34ea47362b0d3a1b260d9725b.jpg';
   }
 }
@@ -64,32 +65,64 @@ watchEffect(async () => {
     }));
 
     products.value = dataProducts;
-    console.log(products.value);
+    //console.log(products.value);
 
     store.setProducts(dataProducts);
   } catch (err) {
-    console.log('Error caught:', err);
+    //console.log('Error caught:', err);
     error.value = err.message;
   }
 });
 
-/*
-const filters = ref({
-title: null
+watchEffect(async () => {
+  const categoriesUrl = 'https://api.escuelajs.co/api/v1/categories';
+  const response = await fetch(categoriesUrl);
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  categories.value = await response.json();
 });
 
+const filters = ref({
+  title: null,
+  category: null
+});
+
+// Este watch observa cambios en los filtros y actualiza la lista de productos
 watch(filters, async (newFilters) => {
-
-const newUrl = `https://api.escuelajs.co/api/v1/products`;
-
-products.value = await (await fetch(newUrl)).json()
-})*/
+  let query = '';
+  if (newFilters.category) {
+    query = `?categoryId=${newFilters.category}`;
+  }
+  const newUrl = `https://api.escuelajs.co/api/v1/products${query}`;
+  try {
+    const response = await fetch(newUrl);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    products.value = await response.json();
+  } catch (error) {
+    console.error('Failed to fetch filtered products:', error);
+  }
+});
 </script>
 
 <template>
   <section id="products">
     <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-      <categorySelector />
+      <div id="categorySelector" class="mb-4">
+        <ul class="flex flex-wrap justify-center -mb-px text-sm font-medium text-center pb-5" id="default-styled-tab"
+          data-tabs-toggle="#default-styled-tab-content"
+          data-tabs-active-classes="text-softPink hover:text-softPink dark:text-purple-500 dark:hover:text-purple-500 border-purple-600 dark:border-purple-500"
+          data-tabs-inactive-classes="dark:border-transparent text-softPink hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300"
+          role="tablist">
+          <li v-for="category in categories" :value="category.id" :key="category.id" class="me-2" role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-softPink hover:border-softPink"
+              id="profile-styled-tab" data-tabs-target="#styled-profile" type="button" role="tab"
+              aria-controls="profile" aria-selected="false">{{ category.name }}</button>
+          </li>
+        </ul>
+      </div>
       <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-16">
         <div v-for="(product, index) in products" :key="product.id" class="group cursor-pointer">
           <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7"
