@@ -6,6 +6,11 @@ import categorySelector from './smallComponents/categorySelector.vue';
 // From here we access all the functions of the store.
 // We put the data of the store in a variable
 const store = useShopProducts();
+const products = ref([]);
+const categories = ref([]);
+const urlProducts = ref('https://api.escuelajs.co/api/v1/products');
+const error = ref(null);
+const inputKeyword = ref('');
 
 const increment = (index) => {
   store.increment(index);
@@ -19,9 +24,7 @@ const deleteProduct = (id) => {
   store.deleteProduct(id);
 };
 
-const products = ref([]);
-const categories = ref([]);
-const error = ref(null);
+
 
 const parseImage = (images) => {
   if (images.length <= 0) {
@@ -46,10 +49,10 @@ const parseImage = (images) => {
   }
 }
 
-watchEffect(async () => {
+
+watch(urlProducts, async () => {
   try {
-    const url = 'https://api.escuelajs.co/api/v1/products';
-    const response = await fetch(url);
+    const response = await fetch(urlProducts.value);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -72,7 +75,8 @@ watchEffect(async () => {
     //console.log('Error caught:', err);
     error.value = err.message;
   }
-});
+}, 
+{ immediate: true });
 
 watchEffect(async () => {
   const categoriesUrl = 'https://api.escuelajs.co/api/v1/categories';
@@ -105,21 +109,36 @@ watch(filters, async (newFilters) => {
     console.error('Failed to fetch filtered products:', error);
   }
 });
+
+const changeCategory = (categoryId) => {
+  const newURL = "https://api.escuelajs.co/api/v1/categories/" + categoryId + "/products";
+  
+  urlProducts.value = newURL;  
+}
+/*
+watch(inputKeyword, async() => {
+  // const newURL = xxxx
+  // urlProducts.value = newURL; 
+})
+
+watch([priceMin, priceMax], async() => {
+  // const newURL = xxxx
+  // urlProducts.value = newURL; 
+})
+*/
+
+
 </script>
 
 <template>
   <section id="products">
     <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
       <div id="categorySelector" class="mb-4">
-        <ul class="flex flex-wrap justify-center -mb-px text-sm font-medium text-center pb-5" id="default-styled-tab"
-          data-tabs-toggle="#default-styled-tab-content"
-          data-tabs-active-classes="text-softPink hover:text-softPink dark:text-purple-500 dark:hover:text-purple-500 border-purple-600 dark:border-purple-500"
-          data-tabs-inactive-classes="dark:border-transparent text-softPink hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300"
-          role="tablist">
+        <ul class="flex flex-wrap justify-center -mb-px text-sm font-medium text-center pb-5">
           <li v-for="category in categories" :value="category.id" :key="category.id" class="me-2" role="presentation">
-            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-softPink hover:border-softPink"
-              id="profile-styled-tab" data-tabs-target="#styled-profile" type="button" role="tab"
-              aria-controls="profile" aria-selected="false">{{ category.name }}</button>
+            <button @click="changeCategory(category.id)"
+              class="inline-block p-4 border-b-2 rounded-t-lg hover:text-softPink hover:border-softPink">{{
+                category.name }}</button>
           </li>
         </ul>
       </div>
